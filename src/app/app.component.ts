@@ -10,19 +10,21 @@ export class AppComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      // Maneja redirecciones después del inicio de sesión
-      await this.msalService.instance.handleRedirectPromise();
-      console.log('MSAL inicializado correctamente.');
+      // Asegúrate de que MSAL maneje las redirecciones correctamente
+      const result = await this.msalService.instance.handleRedirectPromise();
+      if (result) {
+        console.log('Inicio de sesión exitoso:', result);
+      } else {
+        console.log('No hay redirección activa.');
+      }
     } catch (error) {
-      console.error('Error inicializando MSAL:', error);
+      console.error('Error durante la inicialización de MSAL:', error);
     }
   }
 
   login(): void {
-    console.log('Botón de login clickeado');
-    this.msalService.loginRedirect({
-      scopes: ['openid', 'profile', 'email'],
-    });
+    console.log('Iniciando sesión...');
+    this.msalService.loginRedirect();
   }
 
   logout(): void {
