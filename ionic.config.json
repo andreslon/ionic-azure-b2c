@@ -1,0 +1,7 @@
+{
+  "name": "ionic-azure-b2c",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
