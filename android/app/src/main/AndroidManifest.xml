@@ -9,6 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- Actividad principal -->
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:name=".MainActivity"
@@ -17,21 +18,32 @@
             android:launchMode="singleTask"
             android:exported="true">
 
-            <!-- Intent Filter para Azure AD B2C Redirection -->
+            <!-- Intent Filter para iniciar la aplicación -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- Intent Filter para redirección de Azure AD B2C -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="msalco.coem.ionicazureb2c" android:host="auth" />
             </intent-filter>
-
         </activity>
 
+        <!-- Actividad para manejo de pestañas del navegador (MSAL) -->
+        <activity android:name="com.microsoft.identity.client.BrowserTabActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="msalco.coem.ionicazureb2c" android:host="auth" />
+            </intent-filter>
+        </activity>
+
+        <!-- FileProvider para acceso a archivos -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -39,10 +51,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
     </application>
 
-    <!-- Permissions -->
+    <!-- Permisos necesarios -->
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

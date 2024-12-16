@@ -7,10 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import {
   MsalModule,
   MsalService,
+  MsalGuard,
   MsalInterceptor,
-  MSAL_INSTANCE,
-  MSAL_GUARD_CONFIG,
-  MSAL_INTERCEPTOR_CONFIG,
   MsalGuardConfiguration,
   MsalInterceptorConfiguration,
 } from '@azure/msal-angular';
@@ -18,21 +16,21 @@ import { IPublicClientApplication, PublicClientApplication, InteractionType } fr
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { b2cConfig } from './b2c-config';
 
-// Instancia de MSAL
+// Instancia inicializada de MSAL
 const msalInstance: IPublicClientApplication = new PublicClientApplication(b2cConfig);
 
-// Configuración de MsalGuard
 const msalGuardConfig: MsalGuardConfiguration = {
   interactionType: InteractionType.Redirect,
   authRequest: {
-    scopes: ['openid', 'profile'],
+    scopes: ['openid', 'profile', 'email'],
   },
 };
 
-// Configuración de MsalInterceptor
 const msalInterceptorConfig: MsalInterceptorConfiguration = {
   interactionType: InteractionType.Redirect,
-  protectedResourceMap: new Map([['https://graph.microsoft.com/v1.0/me', ['User.Read']]]),
+  protectedResourceMap: new Map([
+    ['https://graph.microsoft.com/v1.0/me', ['User.Read']],
+  ]),
 };
 
 @NgModule({
