@@ -70,3 +70,4 @@ testem.log
 Thumbs.db
 
 /b2c-config.ts
+src/app/b2c-config.ts
